@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ExpressionsSample"
+             x:Class="ExpressionsSample.MainPage"
+             x:DataType="local:MainViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <Label Text=".NET 11 Preview: C# Expressions in XAML Sample" 
+                   FontSize="24" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <!-- FEATURE 1: Simple Property Binding -->
+            <Border Stroke="Gray" Padding="15" StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="1) Property Binding using C# Expressions" FontAttributes="Bold" />
+                    
+                    <!-- NEW: C# Expression syntax-->
+                    <Entry Text="{Name}" Placeholder="Enter your name" />
+                    <Label Text="{Name}" FontSize="18" />
+                                        
+                    <!-- OLD: Traditional Binding syntax
+                    <Entry Text="{Binding Name}" Placeholder="Enter your name" />
+                    <Label Text="{Binding Name}" FontSize="18" />
+                    -->
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- FEATURE 2: String Interpolation -->
+            <Border Stroke="Gray" Padding="15" StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="2) Clean and Easy String Interpolation" FontAttributes="Bold" />
+                    
+                    <!-- NEW: C# Expression with string interpolation -->
+                    <Label Text="{$'Hello, {Name}!'}" FontSize="18" TextColor="DarkBlue" />
+                    
+                    <!-- OLD: Required StringFormat or a computed property in ViewModel
+                    <Label Text="{Binding Name, StringFormat='Hello, {0}!'}" FontSize="18" TextColor="DarkBlue" />
+                    -->
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- FEATURE 3: Multi-Root Expressions (Calculations) -->
+            <Border Stroke="Gray" Padding="15" StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="3) Inline Calculations with C# Expressions" FontAttributes="Bold" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Price:" VerticalOptions="Center" />
+                        <Slider Value="{Price}" Minimum="1" Maximum="10000" WidthRequest="100"/>
+                        <Label Text="{$'₹{Price:F2}'}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Quantity:" VerticalOptions="Center" />
+                        <Slider Value="{Quantity}" Minimum="1" Maximum="100" WidthRequest="100" />
+                        <Label Text="{$'{Quantity}'}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    
+
+                    <!-- NEW: C# Expression with calculation -->
+                    <Label Text="{$'Total: ₹{(Price * Quantity):F2}'}" FontSize="20"
+       FontAttributes="Bold"
+       TextColor="Green" />
+                    <!-- OLD: Required a computed property in ViewModel (e.g., Total) or MultiBinding with converter
+                    <Label Text="{Binding Total, StringFormat='Total: ${0:F2}'}" FontSize="20" FontAttributes="Bold" TextColor="Green" />
+                    
+                    Or with MultiBinding:
+                    <Label FontSize="20" FontAttributes="Bold" TextColor="Green">
+                        <Label.Text>
+                            <MultiBinding StringFormat="Total: ${0:F2}">
+                                <Binding Path="Price" />
+                                <Binding Path="Quantity" />
+                                <MultiBinding.Converter>
+                                    <local:MultiplyConverter />
+                                </MultiBinding.Converter>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    -->
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- FEATURE 4: Boolean Negation -->
+            <Border Stroke="Gray" Padding="15" StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="4) Boolean Negation without a Converter" FontAttributes="Bold" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Hide the text:" VerticalOptions="Center" />
+                        <Switch IsToggled="{IsHidden}" />
+                    </HorizontalStackLayout>
+                    
+                    <!-- NEW: C# Expression with boolean negation -->
+                    <Label Text="To make the label hidden without Converter" 
+                           IsVisible="{!IsHidden}" 
+                           TextColor="Purple"
+                           FontSize="16" />
+
+                    <!-- OLD: This required using a BooleanInvertConverter just to invert a boolean value.
+
+                     <Label Text="This text is visible when NOT hidden"
+                            IsVisible="{Binding IsHidden, Converter={StaticResource BooleanInvertConverter}}"
+                            TextColor="Purple"
+                            FontSize="16" />
+
+                     You also needed to register the converter in XAML resources:
+
+                     <local:BooleanInvertConverter x:Key="BooleanInvertConverter" />
+
+                     And create a converter class in code-behind:
+
+                     public class BooleanInvertConverter : IValueConverter
+                     {
+                         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+                             => !(bool)value;
+
+                         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+                             => !(bool)value;
+                     }
+
+                     With C# Expressions in XAML, this entire setup is replaced by using:
+                     IsVisible="{!IsHidden}"
+                -->
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- FEATURE 5: Boolean Expressions -->
+            <Border Stroke="Gray" Padding="15" StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="5) Boolean Logic (AND / OR) in XAML" FontAttributes="Bold" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Check box 1:" VerticalOptions="Center" />
+                        <CheckBox IsChecked="{CheckBox1}" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Check box 2:" VerticalOptions="Center" />
+                        <CheckBox IsChecked="{CheckBox2}" />
+                    </HorizontalStackLayout>
+                    
+                    <!-- NEW: C# Expression with boolean AND -->
+                    <Label Text="MultiBinding without Converter" 
+                            IsVisible="{CheckBox1 &amp;&amp; CheckBox2}"
+                            
+                            TextColor="Blue" />
+
+                    <!-- OLD: Before C# Expressions in XAML, you needed a MultiBinding with a custom
+                     CheckBothConverter just to enable a button when both boolean values were true.
+
+                     <Button Text="Submit" BackgroundColor="DarkGreen" TextColor="White">
+                         <Button.IsEnabled>
+                             <MultiBinding Converter="{StaticResource CheckBothConverter}">
+                                 <Binding Path="CheckBox1" />
+                                 <Binding Path="CheckBox2" />
+                             </MultiBinding>
+                         </Button.IsEnabled>
+                     </Button>
+
+                     You also had to register the converter in XAML resources:
+
+                     <local:AllTrueConverter x:Key="CheckBothConverter" />
+
+                     And implement the converter in code:
+
+                     public class CheckBothConverter : IMultiValueConverter
+                     {
+                         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+                         {
+                             return values.All(v => v is bool b && b);
+                         }
+
+                         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+                         {
+                             throw new NotSupportedException();
+                         }
+                     }
+
+                     With C# Expressions in XAML, this entire setup is replaced by:
+                     IsVisible="{CheckBox1 && CheckBox2}"
+                -->
+
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- FEATURE 6: Lambda Event Handlers -->
+            <Border Stroke="Gray" Padding="15" StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="6) Inline Lambda Event Handlers" FontAttributes="Bold" />
+                    
+                    <!-- NEW: C# Expression with inline lambda (calling page method) -->
+                    <Button Text="{$'Clicked {ClickCount} times'}" 
+                            Clicked="{(s, e) => this.OnCounterClicked()}"
+                            BackgroundColor="Purple" 
+                            TextColor="White" />
+                    
+                    <!-- NEW: C# Expression accessing ViewModel property directly -->
+                    <Button Text="Clicked using ViewModel" 
+                            Clicked="{(s, e) => ViewModel.ClickCount++}"
+                            BackgroundColor="Blue" 
+                            TextColor="White" />
+                    
+                    <!-- OLD: Required code-behind event handler or Command
+                    <Button Text="{Binding ClickCount, StringFormat='Clicked {0} times'}" 
+                            Clicked="OnCounterClicked"
+                            BackgroundColor="DarkOrange" 
+                            TextColor="White" />
+                    
+                    Or with Command:
+                    <Button Text="{Binding ClickCount, StringFormat='Clicked {0} times'}" 
+                            Command="{Binding IncrementCommand}"
+                            BackgroundColor="DarkOrange" 
+                            TextColor="White" />
+                    -->
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
