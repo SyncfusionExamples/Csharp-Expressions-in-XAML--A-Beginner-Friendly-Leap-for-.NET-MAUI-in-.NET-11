@@ -1,5 +1,4 @@
-# C--Expressions-in-XAML--A-Beginner-Friendly-Leap-for-.NET-MAUI-in-.NET-11
-This sample shows how to learn C# Expressions in XAML with easy examples in .NET 11 for .NET MAUI.
+# C# Expressions in XAML: A Beginner Friendly Leap for .NET MAUI in .NET 11
 
 ## Introduction
 
@@ -17,40 +16,39 @@ That is why .NET 11 introduces C# Expressions in XAML. They allow small, view-on
 
 ## Feature highlights
 
-### Cleaner XAML Markup
+#### Cleaner XAML Markup
 Write small C# expressions directly inside bindings, reducing the need for converters, formatting helpers, or extra ViewModel properties.
 
-### Safer, Faster Binding Execution
+#### Safer, Faster Binding Execution
 Expressions are validated and compiled through XamlSourceGen, giving strong typing, better performance, and fewer runtime errors.
 
-### Beginner-Friendly Syntax
+#### Beginner-Friendly Syntax
 Uses familiar C sharp features like string interpolation, basic math, and conditional expressions, making UI development easier for newcomers.
 
-### Less ViewModel Boilerplate
-UI-only transformations such as totals, display text, or state toggles—can stay in XAML, keeping the ViewModel focused on real business logic.
+#### Less ViewModel Boilerplate
+UI-only transformations such as totals, display text, or state toggles can stay in XAML, keeping the ViewModel focused on real business logic.
 
-### Improved Readability
+#### Improved Readability
 Markup becomes more expressive and closer to what you visually intend, making UI layouts easier to understand at a glance.
 
-### Flexible, Presentation-Only Logic
+#### Flexible, Presentation-Only Logic
 Supports simple formatting, conditional styles, and quick calculations without cluttering your core application logic.
-
 
 ## Prerequisites
 Before running this sample, make sure you have the following:
 
-### .NET 11 Preview
-C# Expressions in XAML is available only in .NET 11 preview builds.
+#### .NET 11 Preview
+C# Expressions in XAML are available only in .NET 11 preview builds.
 
-### XamlSourceGen and PreviewFeatures enabled
+#### XamlSourceGen and PreviewFeatures enabled
 The feature works only when XAML source generation and preview features are turned on for the project.
     - <MauiXamlInflator>SourceGen</MauiXamlInflator>
     - <EnablePreviewFeatures>true</EnablePreviewFeatures>
 
-### .NET MAUI workload installed
+#### .NET MAUI workload installed
 Ensure the MAUI workload is set up using: dotnet workload install maui
 
-### Basic understanding of MAUI bindings
+#### Basic understanding of MAUI bindings
 Familiarity with standard {Binding ...} usage helps in understanding the new syntax.
 
 ## Conclusion
